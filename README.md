@@ -114,71 +114,6 @@ PPO achieved comparable rewards to DQN in significantly fewer episodes.
 
 ---
 
-## Project Structure
-
-```
-ReinforcementLearning/
-├── GridCarEnv/
-│   ├── grid_env.py          # Custom 6×6 environment
-│   ├── q_learning.py        # Tabular Q-learning + ε-greedy/Softmax
-│   └── experiments.py       # Hyperparameter sweep & plotting
-├── DQN/
-│   ├── q_network.py         # QNetwork architecture
-│   ├── vanilla_dqn.py       # Vanilla DQN training
-│   ├── target_dqn.py        # Target network DQN
-│   └── double_dqn.py        # Double DQN
-├── PPO/
-│   └── ppo_agent.py         # PPO actor-critic agent & training loop
-├── checkpoints/             # Saved model weights (.pth)
-├── *.json                   # Training history files
-└── README.md
-```
-
----
-
-## Dependencies
-
-```bash
-pip install numpy pandas matplotlib torch gymnasium highway-env
-```
-
-GPU training is supported automatically via PyTorch's CUDA detection.
-
----
-
-## Running the Code
-
-**Q-Learning baseline:**
-```python
-from grid_env import GridCarEnv
-reward_list, success_rate = train(alpha=0.1, gamma=0.1, epsilon_decay=0.995, episodes=5000)
-```
-
-**Hyperparameter sweep:**
-```python
-results, summary_df = experiments(
-    alphas=[0.1, 0.3, 0.9],
-    gammas=[0.1, 0.3, 0.9],
-    decay_values=[0.9, 0.99, 0.999, 0.9999],
-    policies=["epsilon_greedy", "softmax"],
-    episodes=5000
-)
-```
-
-**DQN training:**
-```python
-train_vanilla(episodes=3000)
-train_target_qnetwork(episodes=3000)
-train_double_dqn(episodes=3000)
-```
-
-**PPO training:**
-```python
-agent, rewards, losses = train_ppo(episodes=1000)
-```
-
----
-
 ## Key Findings
 
 - Softmax policy consistently outperformed ε-greedy in the grid world due to more controlled exploration.
@@ -188,10 +123,4 @@ agent, rewards, losses = train_ppo(episodes=1000)
 
 ---
 
-## References
 
-- Mnih et al. (2015). Human-level control through deep reinforcement learning. *Nature*, 518(7540).
-- Hessel et al. (2018). Rainbow: Combining improvements in deep reinforcement learning. *AAAI*.
-- Lv et al. (2019). Stochastic double deep Q-network. *IEEE Access*, 7.
-- Schulman et al. (2017). Proximal policy optimization algorithms. *arXiv:1707.06347*.
-- Roderick et al. (2017). Implementing the deep Q-network. *arXiv:1711.07478*.
